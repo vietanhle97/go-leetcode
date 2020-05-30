@@ -27,8 +27,6 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 		}
 		table[0][i] = 1
 	}
-
-	fmt.Println(table)
 	for i := 1; i < m; i++ {
 		for j := 1; j < n; j++ {
 			if obstacleGrid[i][j] == 1 {
