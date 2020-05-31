@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package Combination_Sum_IV_377
 
 func findMin(nums []int) int {
 	min_ := nums[0]
@@ -11,7 +9,6 @@ func findMin(nums []int) int {
 	}
 	return min_
 }
-
 
 func combinationSum4(nums []int, target int) int {
 	m := len(nums)
@@ -24,13 +21,13 @@ func combinationSum4(nums []int, target int) int {
 	}
 	table := make([]int, target+1)
 	table[min_] = 1
-	for i:=0; i<min_; i++ {
+	for i := 0; i < min_; i++ {
 		table[i] = -1
 	}
-	for i:=min_+1; i<target+1; i++ {
-		for _,e := range nums {
+	for i := min_ + 1; i < target+1; i++ {
+		for _, e := range nums {
 			if e < i {
-				if table[i-e] != -1{
+				if table[i-e] != -1 {
 					table[i] += table[i-e]
 				}
 			} else if e == i {
@@ -45,10 +42,4 @@ func combinationSum4(nums []int, target int) int {
 		return 0
 	}
 	return table[target]
-}
-
-func main()  {
-	nums := []int{1,2,3}
-	target := 4
-	fmt.Println(combinationSum4(nums, target))
 }

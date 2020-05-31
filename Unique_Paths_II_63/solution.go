@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package Unique_Paths_II_63
 
 func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	m := len(obstacleGrid)
@@ -38,8 +36,4 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	}
 
 	return table[m-1][n-1]
-}
-func main() {
-	board := [][]int{{0, 0}}
-	fmt.Println(uniquePathsWithObstacles(board))
 }

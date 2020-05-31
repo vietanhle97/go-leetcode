@@ -1,8 +1,4 @@
-package main
-
-import (
-	"fmt"
-)
+package Number_of_Dice_Rolls_With_Target_Sum_1155
 
 func pow() int {
 	res := 10
@@ -46,8 +42,4 @@ func numRollsToTarget(d int, f int, target int) int {
 		}
 	}
 	return table[d][target]
-}
-
-func main() {
-	fmt.Println(numRollsToTarget(1, 6, 3))
 }

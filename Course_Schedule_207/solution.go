@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package Course_Schdule_207
 
 func dfsCycle(m map[int][]int, visited []bool, rec []bool, v int) bool {
 	visited[v] = true
@@ -39,9 +37,4 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 	}
 	return true
-}
-
-func main() {
-	p := [][]int{{1, 0}, {0, 1}, {2, 3}, {2, 1}}
-	fmt.Println(canFinish(4, p))
 }

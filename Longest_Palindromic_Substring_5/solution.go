@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package Longest_Palindromic_Substring_5
 
 func longestPalindrome(s string) string {
 	m := len(s)
@@ -11,22 +9,22 @@ func longestPalindrome(s string) string {
 		return s
 	}
 	table := make([][]bool, m)
-	for i,_ := range table {
+	for i, _ := range table {
 		table[i] = make([]bool, m)
 		table[i][i] = true
 	}
-	for cl:=2; cl<m+1; cl++ {
-		for i:=0; i<m-cl+1; i++ {
-			j := i+cl-1
-			if s[i] == s[j] && cl == 2{
+	for cl := 2; cl < m+1; cl++ {
+		for i := 0; i < m-cl+1; i++ {
+			j := i + cl - 1
+			if s[i] == s[j] && cl == 2 {
 				table[i][j] = true
-			} else if s[i] == s[j]{
+			} else if s[i] == s[j] {
 				table[i][j] = table[i+1][j-1]
 			}
 			if table[i][j] && j-i+1 > max_ {
 				start = i
-				end = j+1
-				max_ = j+1-i
+				end = j + 1
+				max_ = j + 1 - i
 			}
 
 		}
@@ -35,8 +33,4 @@ func longestPalindrome(s string) string {
 		return string(s[0])
 	}
 	return s[start:end]
-}
-
-func main() {
-	fmt.Println(longestPalindrome("asdfadfa"))
 }

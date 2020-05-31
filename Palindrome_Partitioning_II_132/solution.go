@@ -1,13 +1,12 @@
-package main
+package Palindrome_Partitioning_II_132
 
 import (
-	"fmt"
 	"math"
 )
 
 func isPalindrome(s string, m int) bool {
 	i := 0
-	j := m-1
+	j := m - 1
 	for i < j {
 		if s[i] != s[j] {
 			return false
@@ -24,21 +23,18 @@ func minCut(s string) int {
 		return 0
 	}
 	table := []float64{}
-	for i:=0; i<m+1; i++ {
+	for i := 0; i < m+1; i++ {
 		table = append(table, math.Inf(1))
 	}
 	table[0] = 0
-	for j:=1; j<m+1; j++ {
-		for k:=0;k < j; k++ {
+	for j := 1; j < m+1; j++ {
+		k := 0
+		for k < j {
 			if isPalindrome(s[k:j], j-k) {
-				table[j] = math.Min(table[k] + 1, table[j])
+				table[j] = math.Min(table[k]+1, table[j])
 			}
+			k += 1
 		}
 	}
 	return int(table[m] - 1)
-}
-
-func main() {
-	s := "abbab"
-	fmt.Println(minCut(s))
 }

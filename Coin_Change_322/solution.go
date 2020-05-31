@@ -1,9 +1,7 @@
-package main
-
-import "fmt"
+package Coin_Change_322
 
 func isExist(coins []int, n int) bool {
-	for _,e := range coins {
+	for _, e := range coins {
 		if e == n {
 			return true
 		}
@@ -12,7 +10,7 @@ func isExist(coins []int, n int) bool {
 }
 
 func min_(a int, b int) int {
-	if a<=b {
+	if a <= b {
 		return a
 	}
 	return b
@@ -23,14 +21,14 @@ func coinChange(coins []int, amount int) int {
 		return 0
 	}
 	res := []int{}
-	for i:=0; i<amount+1; i++ {
+	for i := 0; i < amount+1; i++ {
 		if isExist(coins, i) {
 			res = append(res, 1)
 		} else {
 			res = append(res, -1)
 		}
 	}
-	for i:=1; i<amount+1; i++ {
+	for i := 1; i < amount+1; i++ {
 		for _, e := range coins {
 			if e < i {
 				if res[i-e] == -1 {
@@ -47,10 +45,4 @@ func coinChange(coins []int, amount int) int {
 		}
 	}
 	return res[amount]
-}
-
-func main() {
-	coins := []int{1,2,5}
-	amount := 11
-	fmt.Println(coinChange(coins, amount))
 }
