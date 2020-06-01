@@ -73,11 +73,11 @@ func Test_diceRollToTarget(t *testing.T) {
 		{
 			name: "dices roll to target",
 			args: args{
-				dices:  10,
-				faces:  10,
-				target: 30,
+				dices:  30,
+				faces:  30,
+				target: 90,
 			},
-			want: 9091270,
+			want: 405749228,
 		},
 	}
 	for _, tt := range tests {

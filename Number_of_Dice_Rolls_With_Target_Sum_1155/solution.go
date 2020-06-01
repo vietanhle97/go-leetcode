@@ -20,14 +20,15 @@ func numRollsToTarget(d int, f int, target int) int {
 	for i := 1; i < d+1; i++ {
 		for j := i; j < target+1; j++ {
 			if i == 1 {
-				for j < f+1 {
-					if j <= target {
-						table[i][j] = 1
-					} else {
-						break
-					}
-					j++
+				if j >= f+1 {
+					break
 				}
+				if j <= target {
+					table[i][j] = 1
+				} else {
+					break
+				}
+
 			} else if i == j {
 				table[i][j] = 1
 			} else {
