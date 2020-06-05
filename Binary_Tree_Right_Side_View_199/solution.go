@@ -7,7 +7,7 @@ type TreeNode struct {
 }
 
 type Level struct {
-	m     map[int][]int
+	m     map[int]int
 	order int
 }
 
@@ -24,24 +24,20 @@ func findOrder(node *TreeNode, lvl *Level, order int) {
 	}
 	lvl.order = max(lvl.order, order)
 	findOrder(node.Left, lvl, order+1)
-	if _, ok := lvl.m[order]; ok {
-		lvl.m[order] = append(lvl.m[order], node.Val)
-	} else {
-		lvl.m[order] = []int{node.Val}
-	}
 	findOrder(node.Right, lvl, order+1)
+	lvl.m[order] = node.Val
 }
 
 func rightSideView(root *TreeNode) []int {
 	if root == nil {
 		return []int{}
 	}
-	lvl := Level{map[int][]int{}, 0}
+	lvl := Level{map[int]int{}, 0}
 	findOrder(root, &lvl, 0)
 	res := make([]int, lvl.order+1)
 	i := 0
 	for i <= lvl.order {
-		res[i] = lvl.m[i][len(lvl.m[i])-1]
+		res[i] = lvl.m[i]
 		i++
 	}
 	return res
