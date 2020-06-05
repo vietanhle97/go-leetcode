@@ -1,7 +1,7 @@
 package Maximum_Product_Subarray_152
 
 import (
-	"github.com/magiconair/properties/assert"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
