@@ -22,7 +22,7 @@ func minCut(s string) int {
 	if s == "" {
 		return 0
 	}
-	table := []float64{}
+	table := make([]float64, 0)
 	for i := 0; i < m+1; i++ {
 		table = append(table, math.Inf(1))
 	}
