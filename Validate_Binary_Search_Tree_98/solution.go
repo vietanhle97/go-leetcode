@@ -6,22 +6,31 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func inOrder(root *TreeNode, output *[]int) {
+func inOrder(root *TreeNode, output *[]int, res *bool) {
+	if !(*res) {
+		return
+	}
 	if root == nil {
 		return
 	}
-	inOrder(root.Left, output)
-	*output = append(*output, root.Val)
-	inOrder(root.Right, output)
+	inOrder(root.Left, output, res)
+	if len(*output) == 0 {
+		*output = append(*output, root.Val)
+	} else {
+		if root.Val <= (*output)[len(*output)-1] {
+			*res = false
+			return
+		} else {
+			*output = append(*output, root.Val)
+		}
+	}
+
+	inOrder(root.Right, output, res)
 }
 
 func isValidBST(root *TreeNode) bool {
-	res := make([]int, 0)
-	inOrder(root, &res)
-	for i := 1; i < len(res); i++ {
-		if res[i] <= res[i-1] {
-			return false
-		}
-	}
-	return true
+	output := make([]int, 0)
+	res := true
+	inOrder(root, &output, &res)
+	return res
 }
