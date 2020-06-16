@@ -1,64 +1,38 @@
 package Balance_A_Binary_Search_Tree_1382
 
-import (
-	"fmt"
-	"math"
-)
-
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func height(root *TreeNode) int {
+func inOrder(root *TreeNode, nodes *[]*TreeNode) {
 	if root == nil {
-		return 0
+		return
 	}
-	left, right := height(root.Left), height(root.Right)
-	if left == -1 || right == -1 || int(math.Abs(float64(left)-float64(right))) > 1 {
-		return -1
-	}
-	return 1 + max(left, right)
+	inOrder(root.Left, nodes)
+	*nodes = append(*nodes, root)
+	inOrder(root.Right, nodes)
 }
 
-func rotateLeft(root *TreeNode) *TreeNode {
-	newRoot := root.Right
-	root.Right = newRoot.Left
-	newRoot.Left = root
-	return newRoot
-}
-
-func rotateRight(root *TreeNode) *TreeNode {
-	newRoot := root.Left
-	root.Left = newRoot.Right
-	newRoot.Right = root
-	return newRoot
+func buildTree(nodes []*TreeNode, start, end int) *TreeNode {
+	if start > end {
+		return nil
+	}
+	mid := (start + end) / 2
+	node := nodes[mid]
+	node.Left = buildTree(nodes, start, mid-1)
+	node.Right = buildTree(nodes, mid+1, end)
+	return node
 }
 
 func balanceBST(root *TreeNode) *TreeNode {
+	nodes := make([]*TreeNode, 0)
+	inOrder(root, &nodes)
+	buildTree(nodes, 0, len(nodes)-1)
+	if len(nodes)%2 == 0 {
+		return nodes[len(nodes)/2-1]
+	}
+	return nodes[len(nodes)/2]
 
-	//for height(root) == -1 {
-	//	l, r := height(root.Left), height(root.Right)
-	//	if r > l {
-	//		if height(root.Right.Left) > height(root.Right.Right) {
-	//			root.Right = rotateRight(root.Right)
-	//		}
-	//		root = rotateLeft(root)
-	//	} else {
-	//		if height(root.Left.Right) > height(root.Left.Left) {
-	//			root.Left = rotateLeft(root.Left)
-	//		}
-	//		root = rotateRight(root)
-	//	}
-	//}
-	fmt.Println(height(root))
-	return root
 }
