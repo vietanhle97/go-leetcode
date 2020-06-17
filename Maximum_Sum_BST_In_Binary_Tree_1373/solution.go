@@ -2,65 +2,46 @@ package Maximum_Sum_BST_In_Binary_Tree_1373
 
 import "math"
 
+// I use the value 50000 and -50000 because -40000 <= node value <= 40000
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
 }
 
+func min(a, b int) int {
+	return int(math.Min(float64(a), float64(b)))
+}
+
 func max(a, b int) int {
 	return int(math.Max(float64(a), float64(b)))
 }
 
-func postOrder(root *TreeNode, cur []int, isBST *map[*TreeNode]bool, res *int) {
+func DFS(root *TreeNode, res *int) (int, int, int, bool) {
 	if root == nil {
-		return
+		return 50000, -50000, 0, true
 	}
-
-	// Calculate the sum of subtree
-	ls, rs := []int{0}, []int{0}
-	postOrder(root.Left, ls, isBST, res)
-	postOrder(root.Right, rs, isBST, res)
-
-	// sum of the current subtree
-	cur[0] = ls[0] + rs[0] + root.Val
-
-	// Check if the current root is the root of the valid BST
 	if root.Left == nil && root.Right == nil {
-		(*isBST)[root] = true
-	} else if root.Left == nil {
-		if root.Val < root.Right.Val {
-			(*isBST)[root] = (*isBST)[root.Right]
-		} else {
-			(*isBST)[root] = false
-		}
-	} else if root.Right == nil {
-		if root.Val > root.Left.Val {
-			(*isBST)[root] = (*isBST)[root.Left]
-		} else {
-			(*isBST)[root] = false
-		}
-	} else {
-		if root.Val > root.Left.Val && root.Val < root.Right.Val {
-			(*isBST)[root] = (*isBST)[root.Left] && (*isBST)[root.Right]
-		} else {
-			(*isBST)[root] = false
-		}
+		*res = max(root.Val, *res)
+		return root.Val, root.Val, root.Val, true
 	}
 
-	// If the root is a valid BST => update the return value
-	// to the max of current value, the sum of left subtree, the sum of the right subtree
-	// and the sum of the whole tree
-	if (*isBST)[root] {
-		*res = max(*res, max(max(ls[0], rs[0]), cur[0]))
-	}
+	minLS, maxLS, sumLS, checkLS := DFS(root.Left, res)
+	minRS, maxRS, sumRS, checkRS := DFS(root.Right, res)
 
+	if checkLS && checkRS {
+		if root.Val > maxLS && root.Val < minRS {
+			cur := sumLS + sumRS + root.Val
+			*res = max(*res, cur)
+			return min(root.Val, minLS), max(root.Val, maxRS), cur, true
+		}
+	}
+	return -50000, 50000, 0, false
 }
 
 func maxSumBST(root *TreeNode) int {
-	cur := []int{0}
 	res := 0
-	isBST := map[*TreeNode]bool{}
-	postOrder(root, cur, &isBST, &res)
+	DFS(root, &res)
 	return res
 }
