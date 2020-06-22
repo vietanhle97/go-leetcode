@@ -36,12 +36,12 @@ func asteroidCollision(asteroids []int) []int {
 		return asteroids
 	}
 	//Initialize the stack
-	pos := []int{}
+	pos := make([]int, 0)
 	// Go from the position of the first positive asteroid
 	for i := ind; i < m; i++ {
 		cur := asteroids[i]
 		if cur > 0 {
-			// whenever meeting an positive asteroid => add to the stack
+			// whenever meeting a positive asteroid => add to the stack
 			pos = append(pos, cur)
 		} else {
 			// when meet the negative and stack is empty => add the negative to the result

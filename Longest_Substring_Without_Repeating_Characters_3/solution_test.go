@@ -46,9 +46,9 @@ func Test_LongestWithoutDupChar(t *testing.T) {
 		{
 			name: "longest without dup char",
 			args: args{
-				s: "abcabcbb",
+				s: "goEkRXoUoxcRAzoFmHiKPWfWtiRISECXjDPBMMVfjoiwQaJDQPvmMbxiTUWFtKTtkiBwdo",
 			},
-			want: 3,
+			want: 17,
 		},
 	}
 	for _, tt := range tests {
