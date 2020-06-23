@@ -10,9 +10,6 @@ func isValid(weights []int, D, W int) bool {
 	cnt := 0
 	cur := 0
 	for i, e := range weights {
-		if W < e {
-			return false
-		}
 		if cur+e <= W {
 			cur += e
 		} else {
@@ -26,17 +23,20 @@ func isValid(weights []int, D, W int) bool {
 	return cnt <= D
 }
 
-func findSum(weights []int) int {
+func findSumAndMax(weights []int) (int, int) {
 	sum := 0
+	max := weights[0]
 	for _, e := range weights {
+		if e > max {
+			max = e
+		}
 		sum += e
 	}
-	return sum
+	return sum, max
 }
 
 func shipWithinDays(weights []int, D int) int {
-	r := findSum(weights)
-	l := 1
+	r, l := findSumAndMax(weights)
 	res := -1
 	for l <= r {
 		mid := l + (r-l)/2
