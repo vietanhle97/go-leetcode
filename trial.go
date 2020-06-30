@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -143,4 +144,5 @@ func main() {
 	//fmt.Println(testLengthOfLongestSubstring(s))
 	fmt.Println(countCombination(6, 3))
 	fmt.Println(getCombination(3, 2, 1))
+	fmt.Println(runtime.NumCPU())
 }
