@@ -5,10 +5,10 @@ package main
 import (
 	"fmt"
 	"math"
-	"runtime"
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type num struct {
@@ -122,6 +122,36 @@ func getCombination(MAX, n, k int) []int {
 	return res
 }
 
+func factorial(n int) int {
+	res := 1
+	for n > 0 {
+		res *= n
+		n--
+	}
+	return res
+}
+
+func getPermutation(n int, k int) string {
+	nums := make([]int, n)
+	for i, _ := range nums {
+		nums[i] = i + 1
+	}
+	res := ""
+	for len(res) < n {
+		fac := factorial(len(nums) - 1)
+		ind := k / fac
+		r := k % fac
+		if ind > 0 && r == 0 {
+			ind -= 1
+		}
+		res += strconv.Itoa(nums[ind])
+		k -= fac * ind
+
+		nums = append(nums[:ind], nums[ind+1:]...)
+	}
+	return res
+}
+
 func main() {
 	nums := []int{824, 938, 1399, 5607, 6973, 5703, 9609, 4398, 8247}
 	nums1 := []int{0, 0}
@@ -144,5 +174,10 @@ func main() {
 	//fmt.Println(testLengthOfLongestSubstring(s))
 	fmt.Println(countCombination(6, 3))
 	fmt.Println(getCombination(3, 2, 1))
-	fmt.Println(runtime.NumCPU())
+	start := time.Now()
+	for i := 1; i <= 100; i++ {
+		getPermutation(9, i)
+	}
+	fmt.Println(time.Now().Sub(start))
+
 }

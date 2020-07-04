@@ -32,7 +32,7 @@ func findMaxProductSubtree(root *TreeNode, cur []int, res *int, total int) {
 	findMaxProductSubtree(root.Left, left, res, total)
 	findMaxProductSubtree(root.Right, right, res, total)
 	cur[0] = left[0] + right[0] + root.Val
-	*res = max(*res, ((total - cur[0]) * cur[0]))
+	*res = max(*res, (total-cur[0])*cur[0])
 }
 
 func maxProduct(root *TreeNode) int {
