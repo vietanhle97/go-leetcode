@@ -27,9 +27,9 @@ func Test_combinationSum3(t *testing.T) {
 			name: "combination 3",
 			args: args{
 				n: 9,
-				k: 3,
+				k: 3000,
 			},
-			want: "123456879",
+			want: "127398654",
 		},
 		{
 			name: "combination 3",
@@ -42,10 +42,10 @@ func Test_combinationSum3(t *testing.T) {
 		{
 			name: "combination 3",
 			args: args{
-				n: 7,
-				k: 500,
+				n: 9,
+				k: 241920,
 			},
-			want: "1627354",
+			want: "698754321",
 		},
 	}
 	for _, tt := range tests {
