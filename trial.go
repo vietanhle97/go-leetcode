@@ -152,6 +152,30 @@ func getPermutation(n int, k int) string {
 	return res
 }
 
+func convertPoint(n, i, j int) int {
+	return n*i + j
+}
+
+func isValid(m, n, i, j int) bool {
+	return i >= 0 && i < m && j >= 0 && j < n
+}
+
+func dfsCycle(p int, visited, rec []bool, graph map[int][]int) bool {
+	visited[p], rec[p] = true, true
+	for _, e := range graph[p] {
+		if visited[e] == false {
+			if dfsCycle(e, visited, rec, graph) {
+				return true
+			}
+		}
+		if rec[e] {
+			return true
+		}
+	}
+	rec[p] = false
+	return false
+}
+
 func main() {
 	nums := []int{824, 938, 1399, 5607, 6973, 5703, 9609, 4398, 8247}
 	nums1 := []int{0, 0}
@@ -179,5 +203,4 @@ func main() {
 		getPermutation(9, i)
 	}
 	fmt.Println(time.Now().Sub(start))
-
 }
