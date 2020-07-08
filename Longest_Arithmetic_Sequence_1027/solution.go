@@ -3,14 +3,10 @@ package Longest_Arithmetic_Sequence_1027
 func longestArithSeqLength(A []int) int {
 	res := 0
 	dp := make([][]int, len(A))
-	min_ := A[0]
 	max_ := A[0]
 	for _, e := range A {
 		if e > max_ {
 			max_ = e
-		}
-		if e < min_ {
-			e = min_
 		}
 	}
 	for i, _ := range dp {

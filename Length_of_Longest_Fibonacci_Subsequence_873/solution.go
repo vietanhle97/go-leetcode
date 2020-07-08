@@ -1,12 +1,8 @@
 package Length_of_Longest_Fibonacci_Subsequence_873
 
-type Res struct {
-	val int
-}
-
-func FibBackTrack(start int, max_ int, nums []int, path []int, res *Res) {
-	if len(path) > res.val {
-		res.val = len(path)
+func FibBackTrack(start int, max_ int, nums []int, path []int, res *int) {
+	if len(path) > *res {
+		*res = len(path)
 	}
 	if start >= max_ {
 		return
@@ -23,10 +19,10 @@ func FibBackTrack(start int, max_ int, nums []int, path []int, res *Res) {
 
 }
 func lenLongestFibSubseq(A []int) int {
-	res := Res{0}
+	res := 0
 	FibBackTrack(0, len(A), A, []int{}, &res)
-	if res.val > 2 {
-		return res.val
+	if res > 2 {
+		return res
 	}
 	return 0
 
