@@ -6,7 +6,7 @@ func dfs(start string, m map[string][]string, ans *[]string) {
 	for len(m[start]) > 0 {
 		cur := m[start][0]
 		m[start] = m[start][1:]
-		DFS(cur, m, ans)
+		dfs(cur, m, ans)
 	}
 
 	*ans = append(*ans, start)
