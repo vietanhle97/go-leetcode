@@ -8,8 +8,8 @@ import (
 func Test_LCS(t *testing.T) {
 
 	type args struct {
-		text1 string
-		text2 string
+		s1 string
+		s2 string
 	}
 	tests := []struct {
 		name string
@@ -19,23 +19,23 @@ func Test_LCS(t *testing.T) {
 		{
 			name: "LCS",
 			args: args{
-				text1: "abcde",
-				text2: "ace",
+				s1: "abcde",
+				s2: "ace",
 			},
 			want: 3,
 		},
 		{
 			name: "LCS",
 			args: args{
-				text1: "abcdfgasgsadfgasge",
-				text2: "asdfgsdfgsdfgsdfgsdce",
+				s1: "abcdfgasgsadfgasge",
+				s2: "asdfgsdfgsdfgsdfgsdce",
 			},
 			want: 13,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.want, longestCommonSubsequence(tt.args.text1, tt.args.text2))
+			assert.Equal(t, tt.want, longestCommonSubsequence(tt.args.s1, tt.args.s2))
 		})
 	}
 }

@@ -8,9 +8,9 @@ func max(a, b, c int) int {
 	}
 	return c
 }
-func longestCommonSubsequence(text1 string, text2 string) int {
-	m := len(text1)
-	n := len(text2)
+func longestCommonSubsequence(s1 string, s2 string) int {
+	m := len(s1)
+	n := len(s2)
 
 	if m == 0 || n == 0 {
 		return 0
@@ -23,7 +23,7 @@ func longestCommonSubsequence(text1 string, text2 string) int {
 
 	for i := 1; i < m+1; i++ {
 		for j := 1; j < n+1; j++ {
-			if text1[i-1] == text2[j-1] {
+			if s1[i-1] == s2[j-1] {
 				table[i][j] = table[i-1][j-1] + 1
 			} else {
 				table[i][j] = max(table[i-1][j], table[i-1][j-1], table[i][j-1])

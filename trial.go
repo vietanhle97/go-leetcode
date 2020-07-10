@@ -15,6 +15,12 @@ type num struct {
 	s string
 }
 
+type pair struct {
+	prev int
+	val  int
+	cnt  int
+}
+
 type Nums []num
 
 func (a Nums) Len() int { return len(a) }
@@ -203,4 +209,6 @@ func main() {
 		getPermutation(9, i)
 	}
 	fmt.Println(time.Now().Sub(start))
+	table := make([]pair, 5)
+	fmt.Println(table)
 }
