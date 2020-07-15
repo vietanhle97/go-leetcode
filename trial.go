@@ -15,7 +15,7 @@ type num struct {
 	s string
 }
 
-type pair struct {
+type Pair struct {
 	prev int
 	val  int
 	cnt  int
@@ -209,6 +209,6 @@ func main() {
 		getPermutation(9, i)
 	}
 	fmt.Println(time.Now().Sub(start))
-	table := make([]pair, 5)
+	table := make([]Pair, 5)
 	fmt.Println(table)
 }
