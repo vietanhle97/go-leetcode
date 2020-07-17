@@ -1,12 +1,19 @@
 package Longest_Arithmetic_Sequence_1027
 
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
+}
+
 func longestArithSeqLength(A []int) int {
 	res := 0
 	dp := make([][]int, len(A))
 	max_ := A[0]
 	for _, e := range A {
-		if e > max_ {
-			max_ = e
+		if abs(e) > abs(max_) {
+			max_ = abs(e)
 		}
 	}
 	for i, _ := range dp {
