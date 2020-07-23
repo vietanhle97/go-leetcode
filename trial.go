@@ -21,6 +21,21 @@ type Pair struct {
 	cnt  int
 }
 
+type maxHeap []int
+
+func (h maxHeap) Less(i, j int) bool { return h[i] > h[j] }
+func (h maxHeap) Len() int           { return len(h) }
+func (h maxHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *maxHeap) Push(x interface{}) {
+	*h = append(*h, x.(int))
+}
+func (h *maxHeap) Pop() interface{} {
+	n := h.Len()
+	res := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return res
+}
+
 type Nums []num
 
 func (a Nums) Len() int { return len(a) }
@@ -211,4 +226,7 @@ func main() {
 	fmt.Println(time.Now().Sub(start))
 	table := make([]Pair, 5)
 	fmt.Println(table)
+
+	s := "cabahcbabhacbhabafoghjapgajfvjgafs"
+	fmt.Println(len(s))
 }
