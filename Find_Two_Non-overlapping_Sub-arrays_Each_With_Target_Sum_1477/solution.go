@@ -1,5 +1,7 @@
 package Find_Two_Non_overlapping_Sub_arrays_Each_With_Target_Sum_1477
 
+const MaxInt = int(1e9)
+
 func min(a, b int) int {
 	if a < b {
 		return a
@@ -17,14 +19,14 @@ func minSumOfLengths(arr []int, target int) int {
 		pref = append(pref, pref[len(pref)-1]+arr[i])
 		d[pref[len(pref)-1]] = i
 	}
-	res := 1000000000
-	m, n := 1000000000, 1000000000
+	res := MaxInt
+	m, n := MaxInt, MaxInt
 	for i := range arr {
 		diff := pref[i+1] - target
 		if _, ok := d[diff]; ok {
 			m = min(m, i-d[diff])
 		}
-		if _, ok := d[pref[i+1]+target]; ok && m < 1000000000 {
+		if _, ok := d[pref[i+1]+target]; ok && m < MaxInt {
 			n = d[pref[i+1]+target]
 			res = min(res, m+n-i)
 		}
