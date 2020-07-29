@@ -1,35 +1,20 @@
 package Merge_Intervals_56
 
+import "sort"
+
 func max(a, b int) int {
 	if a > b {
 		return a
 	}
 	return b
 }
-
-func partition(low, high int, m [][]int) int {
-	i := low - 1
-	pivot := m[high]
-	for j := low; j < high; j++ {
-		if m[j][0] < pivot[0] {
-			i += 1
-			m[i], m[j] = m[j], m[i]
-		}
-	}
-	m[i+1], m[high] = m[high], m[i+1]
-	return i + 1
-}
-
-func quickSort(low, high int, m [][]int) {
-	if low < high {
-		pivot := partition(low, high, m)
-		quickSort(low, pivot-1, m)
-		quickSort(pivot+1, high, m)
-	}
-}
-
 func merge(intervals [][]int) [][]int {
-	quickSort(0, len(intervals)-1, intervals)
+	sort.Slice(intervals, func(i, j int) bool {
+		if intervals[i][0] == intervals[j][0] {
+			return intervals[i][1] < intervals[j][1]
+		}
+		return intervals[i][0] < intervals[j][0]
+	})
 	output := make([][]int, 0)
 
 	for _, e := range intervals {
