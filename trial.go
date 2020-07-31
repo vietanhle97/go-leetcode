@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	Trie "go-leetcode/Implement_Trie_Prefix_Tree_208"
 	"math"
 	"sort"
 	"strconv"
@@ -229,4 +230,11 @@ func main() {
 
 	s := "cabahcbabhacbhabafoghjapgajfvjgafs"
 	fmt.Println(len(s))
+	fmt.Println(byte('.'), byte('a'))
+
+	trie := Trie.Constructor()
+	trie.Insert("bad")
+	trie.Insert("banana")
+	trie.Insert("bat")
+	trie.StartsWith("a")
 }
