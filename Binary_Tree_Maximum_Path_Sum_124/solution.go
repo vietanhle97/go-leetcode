@@ -1,47 +1,39 @@
 package Binary_Tree_Maximum_Path_Sum_124
 
+const MinInt = -(1<<31 - 1) - 1
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
 }
 
-func max(a int, b int) int {
-	if a >= b {
-		return a
+func max(a ...int) int {
+	res := a[0]
+	for _, e := range a {
+		if e > res {
+			res = e
+		}
 	}
-	return b
+	return res
 }
 
-func maxOfThree(a int, b int, c int) int {
-	if a >= b && b >= c {
-		return a
-	} else if b >= a && b >= c {
-		return b
-	} else if c >= a && c >= b {
-		return c
-	} else {
-		return a
+func dfs(root *TreeNode) (int, int) {
+	if root == nil {
+		return MinInt, MinInt
 	}
-}
-
-func DFS(node *TreeNode) (int, int) {
-	if node == nil {
-		return 0, 0
-	}
-	l, r := 0, 0
-	ls, rs := -99999999999, -99999999999
-	if node.Left != nil {
-		l, ls = DFS(node.Left)
+	l, r, ls, rs := 0, 0, MinInt, MinInt
+	if root.Left != nil {
+		l, ls = dfs(root.Left)
 		l = max(l, 0)
 	}
-	if node.Right != nil {
-		r, rs = DFS(node.Right)
+	if root.Right != nil {
+		r, rs = dfs(root.Right)
 		r = max(r, 0)
 	}
-	return node.Val + max(l, r), maxOfThree(node.Val+l+r, ls, rs)
+	return root.Val + max(l, r), max(ls, rs, root.Val+l+r)
 }
 
 func maxPathSum(root *TreeNode) int {
-	return max(DFS(root))
+	return max(dfs(root))
 }
