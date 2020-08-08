@@ -20,7 +20,7 @@ func coinChange(coins []int, amount int) int {
 	if amount == 0 {
 		return 0
 	}
-	res := []int{}
+	res := make([]int, 0)
 	for i := 0; i < amount+1; i++ {
 		if isExist(coins, i) {
 			res = append(res, 1)

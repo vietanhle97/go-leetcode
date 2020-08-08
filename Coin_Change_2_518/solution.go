@@ -1,4 +1,4 @@
-package Coin_Change_2
+package Coin_Change_2_518
 
 func change(amount int, coins []int) int {
 	table := make([]int, amount+1)

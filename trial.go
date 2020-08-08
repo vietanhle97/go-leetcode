@@ -4,13 +4,16 @@ package main
 
 import (
 	"fmt"
-	Trie "go-leetcode/Implement_Trie_Prefix_Tree_208"
-	"math"
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 )
+
+const MaxInt = 1 << 31
+
+var k int
+var n int
+var A []int
 
 type num struct {
 	s string
@@ -48,7 +51,22 @@ func (a Nums) Less(i, j int) bool {
 func (a Nums) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 
 func max(a, b int) int {
-	return int(math.Max(float64(a), float64(b)))
+	if a > b {
+		return a
+	}
+	return b
+}
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
 }
 func test(nums []int) {
 	m := len(nums)
@@ -199,42 +217,36 @@ func dfsCycle(p int, visited, rec []bool, graph map[int][]int) bool {
 }
 
 func main() {
-	nums := []int{824, 938, 1399, 5607, 6973, 5703, 9609, 4398, 8247}
-	nums1 := []int{0, 0}
-	nums2 := []int{121, 12}
-	nums3 := []int{3, 30, 34, 5, 9}
-	nums4 := []int{0, 9, 8, 7, 6, 5, 4, 3, 2, 1}
-	test(nums)
-	test(nums1)
-	test(nums2)
-	test(nums3)
-	test(nums4)
-
-	n := []int{1, 2, 32}
-	m := make([]int, len(n))
-	p := n
-	copy(m, n)
-	m = append(m, 9)
-	p = append(p, 9)
-	//fmt.Println(m, n, p)
-	//fmt.Println(testLengthOfLongestSubstring(s))
-	fmt.Println(countCombination(6, 3))
-	fmt.Println(getCombination(3, 2, 1))
-	start := time.Now()
-	for i := 1; i <= 100; i++ {
-		getPermutation(9, i)
+	_, e := fmt.Scanf("%d%d", &n, &k)
+	if e != nil {
+		return
 	}
-	fmt.Println(time.Now().Sub(start))
-	table := make([]Pair, 5)
-	fmt.Println(table)
+	if n <= 1 {
+		fmt.Println(0)
+		return
+	}
+	A = make([]int, n+1)
+	for i := 1; i <= n; i++ {
+		_, e := fmt.Scanf("%d", &A[i])
+		if e != nil {
+			return
+		}
+	}
+	if n == 2 {
+		fmt.Println(abs(A[2] - A[1]))
+		return
+	}
+	dp := make([]int, n+1)
+	for i := 2; i <= n; i++ {
+		dp[i] = MaxInt
+	}
+	for i := 2; i <= n; i++ {
+		for j := 1; j <= k; j++ {
+			if i-j >= 1 {
+				dp[i] = min(dp[i], dp[i-j]+abs(A[i]-A[i-j]))
+			}
+		}
 
-	s := "cabahcbabhacbhabafoghjapgajfvjgafs"
-	fmt.Println(len(s))
-	fmt.Println(byte('.'), byte('a'))
-
-	trie := Trie.Constructor()
-	trie.Insert("bad")
-	trie.Insert("banana")
-	trie.Insert("bat")
-	trie.StartsWith("a")
+	}
+	fmt.Println(dp[n])
 }

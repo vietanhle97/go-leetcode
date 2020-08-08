@@ -43,6 +43,7 @@ func Test_findFirstAndLastPositionOfTarget(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			assert.Equal(t, tt.want, searchRange(tt.args.nums, tt.args.target))
+			assert.Equal(t, tt.want, searchRangeSol2(tt.args.nums, tt.args.target))
 		})
 	}
 }
