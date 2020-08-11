@@ -1,6 +1,6 @@
 package Longest_Increasing_Subsequence_300
 
-func _max(a int, b int) int {
+func max(a int, b int) int {
 	if a >= b {
 		return a
 	}
@@ -18,11 +18,11 @@ func lengthOfLIS(nums []int) int {
 		max_ := 0
 		for j := 0; j < i; j++ {
 			if nums[i] > nums[j] {
-				max_ = _max(table[j], max_)
+				max_ = max(table[j], max_)
 			}
 		}
 		table[i] = max_ + 1
-		ans = _max(ans, table[i])
+		ans = max(ans, table[i])
 	}
 	return ans
 }
