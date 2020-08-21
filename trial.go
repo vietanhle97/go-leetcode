@@ -11,9 +11,10 @@ import (
 
 const MaxInt = 1 << 31
 
-var k int
-var n int
-var A []int
+var k, N, M, n, u, v int
+var A, B int
+var T int64
+var m int64
 
 type num struct {
 	s string
@@ -216,37 +217,83 @@ func dfsCycle(p int, visited, rec []bool, graph map[int][]int) bool {
 	return false
 }
 
-func main() {
-	_, e := fmt.Scanf("%d%d", &n, &k)
-	if e != nil {
-		return
-	}
-	if n <= 1 {
-		fmt.Println(0)
-		return
-	}
-	A = make([]int, n+1)
-	for i := 1; i <= n; i++ {
-		_, e := fmt.Scanf("%d", &A[i])
-		if e != nil {
-			return
+func dfs(u int, vis, dist []int, A [][]int) {
+	vis[u] = 1
+	for _, v := range A[u] {
+		if vis[v] == 0 {
+			dist[v] = dist[u] + 1
+			dfs(v, vis, dist, A)
 		}
 	}
-	if n == 2 {
-		fmt.Println(abs(A[2] - A[1]))
-		return
+}
+func max64(a, b int64) int64 {
+	if a > b {
+		return a
 	}
-	dp := make([]int, n+1)
-	for i := 2; i <= n; i++ {
-		dp[i] = MaxInt
-	}
-	for i := 2; i <= n; i++ {
-		for j := 1; j <= k; j++ {
-			if i-j >= 1 {
-				dp[i] = min(dp[i], dp[i-j]+abs(A[i]-A[i-j]))
-			}
-		}
+	return b
+}
 
+func bs(b []int64, v int64) int {
+	l, r := 0, len(b)-1
+	for l < r {
+		mid := l + (r-l)/2
+		if b[mid] == v {
+			return mid
+		} else if b[mid] < v {
+			l = mid + 1
+		} else {
+			r = mid - 1
+		}
 	}
-	fmt.Println(dp[n])
+	return l
+}
+
+func main() {
+	fmt.Scanf("%d%d%d", &A, &B, &T)
+	a, b, p := make([]int64, 0), make([]int64, 0), int64(0)
+
+	for i := 0; i < A; i++ {
+		fmt.Scanf("%d", &m)
+		p += m
+		a = append(a, p)
+	}
+	p -= p
+	for i := 0; i < B; i++ {
+		fmt.Scanf("%d", &m)
+		p += m
+		b = append(b, p)
+	}
+	if a[A-1]+b[B-1] <= T {
+		fmt.Println(A + B)
+		return
+	}
+	mx := 0
+	for i := 0; i < A; i++ {
+		if a[i] > T {
+			break
+		}
+		cnt := 0
+		tmp := bs(b, T-a[i])
+		if tmp == B || b[tmp] > T-a[i] {
+			tmp--
+		}
+		cnt += tmp + 1
+		cnt += i + 1
+		mx = max(mx, cnt)
+	}
+
+	mxb := 0
+	for i := 0; i < B; i++ {
+		if b[i] > T {
+			break
+		}
+		cnt := 0
+		tmp := bs(a, T-b[i])
+		if tmp == A || a[tmp] > T-b[i] {
+			tmp--
+		}
+		cnt += i + 1
+		mxb = max(mxb, cnt)
+	}
+	println(max(mx, mxb))
 }
