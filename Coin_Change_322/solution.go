@@ -1,48 +1,32 @@
 package Coin_Change_322
 
-func isExist(coins []int, n int) bool {
-	for _, e := range coins {
-		if e == n {
-			return true
-		}
-	}
-	return false
-}
+const MaxInt = int(1e8 + 5)
 
-func min_(a int, b int) int {
-	if a <= b {
+func min(a, b int) int {
+	if a < b {
 		return a
 	}
 	return b
 }
 
 func coinChange(coins []int, amount int) int {
-	if amount == 0 {
+	if len(coins) == 0 {
 		return 0
 	}
-	res := make([]int, 0)
-	for i := 0; i < amount+1; i++ {
-		if isExist(coins, i) {
-			res = append(res, 1)
-		} else {
-			res = append(res, -1)
-		}
+	dp := make([]int, amount+1)
+	for i := range dp {
+		dp[i] = MaxInt
 	}
-	for i := 1; i < amount+1; i++ {
-		for _, e := range coins {
-			if e < i {
-				if res[i-e] == -1 {
-					continue
-				} else {
-					if res[i] == -1 {
-						res[i] = res[i-e] + 1
-					} else {
-						res[i] = min_(res[i], res[i-e]+1)
-					}
+	dp[0] = 0
 
-				}
-			}
+	for _, coin := range coins {
+		for x := coin; x < amount+1; x++ {
+			dp[x] = min(dp[x], dp[x-coin]+1)
 		}
+
 	}
-	return res[amount]
+	if dp[amount] == MaxInt {
+		return 0
+	}
+	return dp[amount]
 }
