@@ -248,52 +248,62 @@ func bs(b []int64, v int64) int {
 	return l
 }
 
+func sumMin(a []int) int64 {
+	n := len(a)
+	l, r, q := make([]int, n), make([]int, n), make([]int, 0)
+	for i := 0; i < n; i++ {
+		for len(q) > 0 && a[q[len(q)-1]] >= a[i] {
+			l[i] += l[q[len(q)-1]] + 1
+			q = q[:len(q)-1]
+		}
+		q = append(q, i)
+	}
+	q = []int{}
+	for i := n - 1; i >= 0; i-- {
+		for len(q) > 0 && a[q[len(q)-1]] > a[i] {
+			r[i] += r[q[len(q)-1]] + 1
+			q = q[:len(q)-1]
+		}
+		q = append(q, i)
+	}
+	res := int64(0)
+	for i := 0; i < n; i++ {
+		res += int64(l[i]+1) * int64(r[i]+1) * int64(a[i])
+	}
+	return res
+}
+func sumMax(a []int) int64 {
+	n := len(a)
+	l, r, q := make([]int, n), make([]int, n), make([]int, 0)
+	for i := 0; i < n; i++ {
+		for len(q) > 0 && a[q[len(q)-1]] <= a[i] {
+			l[i] += l[q[len(q)-1]] + 1
+			q = q[:len(q)-1]
+		}
+		q = append(q, i)
+	}
+	q = []int{}
+	for i := n - 1; i >= 0; i-- {
+		for len(q) > 0 && a[q[len(q)-1]] < a[i] {
+			r[i] += r[q[len(q)-1]] + 1
+			q = q[:len(q)-1]
+		}
+		q = append(q, i)
+	}
+	res := int64(0)
+	for i := 0; i < n; i++ {
+		res += int64(l[i]+1) * int64(r[i]+1) * int64(a[i])
+	}
+	return res
+}
+
+func calculateMaxMinusMinOfAllSubsequence2(a []int) int64 {
+	MIN, MAX := sumMin(a), sumMax(a)
+	return MAX - MIN
+}
+
 func main() {
-	fmt.Scanf("%d%d%d", &A, &B, &T)
-	a, b, p := make([]int64, 0), make([]int64, 0), int64(0)
-
-	for i := 0; i < A; i++ {
-		fmt.Scanf("%d", &m)
-		p += m
-		a = append(a, p)
-	}
-	p -= p
-	for i := 0; i < B; i++ {
-		fmt.Scanf("%d", &m)
-		p += m
-		b = append(b, p)
-	}
-	if a[A-1]+b[B-1] <= T {
-		fmt.Println(A + B)
-		return
-	}
-	mx := 0
-	for i := 0; i < A; i++ {
-		if a[i] > T {
-			break
-		}
-		cnt := 0
-		tmp := bs(b, T-a[i])
-		if tmp == B || b[tmp] > T-a[i] {
-			tmp--
-		}
-		cnt += tmp + 1
-		cnt += i + 1
-		mx = max(mx, cnt)
-	}
-
-	mxb := 0
-	for i := 0; i < B; i++ {
-		if b[i] > T {
-			break
-		}
-		cnt := 0
-		tmp := bs(a, T-b[i])
-		if tmp == A || a[tmp] > T-b[i] {
-			tmp--
-		}
-		cnt += i + 1
-		mxb = max(mxb, cnt)
-	}
-	println(max(mx, mxb))
+	a := []int{2, 2, 3, 5}
+	res := calculateMaxMinusMinOfAllSubsequence2(a)
+	fmt.Println(res)
 }
