@@ -11,12 +11,6 @@ type mem struct {
 
 type Mem []mem
 
-func (a Mem) Len() int { return len(a) }
-func (a Mem) Less(i, j int) bool {
-	return a[i].x < a[j].x
-}
-func (a Mem) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
-
 func binarySearch(Mem []mem, m mem, l, r int) int {
 	res := -1
 	for l <= r {
@@ -50,7 +44,9 @@ func findRightInterval(intervals [][]int) []int {
 		M[i] = tmp
 		ind[tmp] = i
 	}
-	sort.Sort(Mem(M))
+	sort.Slice(M, func(i, j int) bool {
+		return M[i].x < M[j].x
+	})
 	res := make([]int, m)
 	for i, e := range M {
 		tmp := binarySearch(M, e, i, m-1)
