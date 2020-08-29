@@ -303,7 +303,7 @@ func calculateMaxMinusMinOfAllSubsequence2(a []int) int64 {
 }
 
 func main() {
-	a := []int{2, 2, 3, 5}
+	a := []int{2, 1, 3}
 	res := calculateMaxMinusMinOfAllSubsequence2(a)
 	fmt.Println(res)
 }

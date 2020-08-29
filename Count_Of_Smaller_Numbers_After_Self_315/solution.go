@@ -16,7 +16,6 @@ func findMin(A []int) int {
 }
 
 func count(BIT []int, i int) int {
-	i++
 	s := 0
 	for i > 0 {
 		s += BIT[i]
@@ -26,7 +25,6 @@ func count(BIT []int, i int) int {
 }
 
 func update(BIT []int, n, i int) {
-	i++
 	for i < n {
 		BIT[i]++
 		i += i & (-i)
@@ -46,10 +44,10 @@ func countSmaller(A []int) []int {
 		}
 	}
 
-	BIT, res := make([]int, max+1), make([]int, 0)
+	BIT, res := make([]int, max+1), make([]int, m)
 	for i := m - 1; i >= 0; i-- {
-		res = append([]int{count(BIT, A[i]-2)}, res...)
-		update(BIT, max+1, A[i]-1)
+		res[i] = count(BIT, A[i]-1)
+		update(BIT, max+1, A[i])
 	}
 	return res
 }
