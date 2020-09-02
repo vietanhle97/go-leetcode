@@ -14,7 +14,7 @@ func find(parent []int, i int) int {
 func union(parent []int, x, y int) {
 	xSet := find(parent, x)
 	ySet := find(parent, y)
-	parent[xSet] = parent[ySet]
+	parent[xSet] = ySet
 }
 
 func accountsMerge(accounts [][]string) [][]string {
