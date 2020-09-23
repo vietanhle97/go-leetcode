@@ -1,9 +1,5 @@
 package Unique_Paths_III_980
 
-type PathCount struct {
-	c int
-}
-
 func check(p []int, path [][]int) bool {
 	for _, e := range path {
 		if e[0] == p[0] && e[1] == p[1] {
@@ -23,9 +19,9 @@ func isValid(x int, y int, m int, n int, grid [][]int) bool {
 	return true
 }
 
-func DFS(row int, col int, m int, n int, grid [][]int, path [][]int, max_ int, cnt *PathCount) {
+func DFS(row int, col int, m int, n int, grid [][]int, path [][]int, max_ int, cnt *int) {
 	if grid[row][col] == 2 && len(path) == max_ {
-		cnt.c += 1
+		*cnt++
 		return
 	}
 	if isValid(row-1, col, m, n, grid) && check([]int{row - 1, col}, path) {
@@ -45,7 +41,7 @@ func DFS(row int, col int, m int, n int, grid [][]int, path [][]int, max_ int, c
 func uniquePathsIII(grid [][]int) int {
 	m := len(grid)
 	n := len(grid[0])
-	cnt := PathCount{0}
+	cnt := 0
 	row, col := 0, 0
 	obs := 0
 	for i := 0; i < m; i++ {
@@ -59,6 +55,5 @@ func uniquePathsIII(grid [][]int) int {
 		}
 	}
 	DFS(row, col, m, n, grid, [][]int{}, m*n-obs-1, &cnt)
-	return cnt.c
-
+	return cnt
 }
